@@ -21,7 +21,7 @@ def updateBoard(board, num):
     return newBoard
 
 if __name__ == "__main__":
-    filename = "Day4/Part1/puzzle.txt"
+    filename = "Day4/Part2/puzzle.txt"
     with open(filename, "r") as file:
         lines = file.readlines()
     nums = lines[0].strip("\n")
@@ -43,20 +43,25 @@ if __name__ == "__main__":
     nums = [int(x) for x in nums.split(',')]
 
     boards = np.asarray(boards)
-    #print(boards)
 
+    boardWinners = [0] * len(boards)
+    print(boardWinners)
+    #print(boards)
+    ans = 0
     for currNum in nums:
         for i, board in enumerate(boards):
             board = updateBoard(board, currNum)
             boards[i] = board
-            if isWinner(board):
-                sumUnmarked = 0
-                for row in board:
-                    sumUnmarked += sum([x for (x,y) in row if y == False])
-                ans = sumUnmarked * currNum
-                print(ans) # 63552
-                exit()
+            if boardWinners[i] != 1:
+                if isWinner(board):
+                    boardWinners[i] = 1
+                    sumUnmarked = 0
+                    for row in board:
+                        sumUnmarked += sum([x for (x,y) in row if y == False])
+                    ans = sumUnmarked * currNum
+                    print(ans)
     #print(boards)
+    print("Final:", ans) # 1920
     
     # for currNum in nums:
     #     newBoards = []
