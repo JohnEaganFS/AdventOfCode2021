@@ -17,27 +17,17 @@ if __name__ == "__main__":
     spawnAmounts = dict()
     for f in fish:
         spawnAmounts[f] = fish.count(f)
-    #events = list(set([(f, fish.count(f)) for f in fish]))
-    #heapq.heapify(events)
     count = len(fish)
     currDay = 0
 
     start = time.perf_counter()
-    #print(events)
     while currDay < days:
         if currDay in spawnAmounts:
             spawn = spawnAmounts[currDay]
-            if currDay+9 in spawnAmounts:
-                spawnAmounts[currDay+9] += spawn
-            else:
-                spawnAmounts[currDay+9] = spawn
-            if currDay+7 in spawnAmounts:
-                spawnAmounts[currDay+7] += spawn
-            else:
-                spawnAmounts[currDay+7] = spawn
-        #currDay, spawn = heapq.heappop(events)
-        #heapq.heappush(events, (currDay+9, spawn))
-        #heapq.heappush(events, (currDay+7, spawn))
+            temp = 0 if currDay+9 not in spawnAmounts else spawnAmounts[currDay+9]
+            spawnAmounts[currDay+9] = temp + spawn
+            temp = 0 if currDay+7 not in spawnAmounts else spawnAmounts[currDay+7]
+            spawnAmounts[currDay+7] = temp + spawn
             count += spawn
         currDay += 1
     end = time.perf_counter()
